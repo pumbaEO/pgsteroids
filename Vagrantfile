@@ -10,6 +10,10 @@ Vagrant.configure(2) do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
 
+   config.vm.network "forwarded_port", guest: 5432, host: 5432
+   config.vm.network "forwarded_port", guest: 8081, host: 8081
+   config.vm.network "forwarded_port", guest: 8888, host: 8888
+
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
   config.vm.box = "phusion/ubuntu-14.04-amd64"
