@@ -1,0 +1,9 @@
+[submodule "vandors/bloat"]
+	path = vandors/bloat
+	url = https://github.com/keithf4/pg_bloat_check
+[submodule "vendors/compactable"]
+	path = vendors/compactable
+	url = https://github.com/PostgreSQL-Consulting/pgcompacttable.git
+[submodule "vendors/bloat"]
+	path = vendors/bloat
+	url = https://github.com/keithf4/pg_bloat_check
