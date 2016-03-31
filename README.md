@@ -73,7 +73,23 @@ cp pconf/postgresql_conf.PostgreSQLPro # Удобный для быстрого 
 
 ### Скрипты
 
-* Содержат несколько примеров скриптов
-  * пример получения сжатия на полях таблиц
+* Содержат несколько примеров скриптов SQL `./pscripts`
 
-* остальные будут появляться по мере использования
+а также
+
+пример получения bloat
+
+```
+vagrant ssh
+cd /vagrant
+./vendors/bloat/pg_bloat_check.py --create_view -c "host=localhost dbname=<ИмяБазы> user=postgres password=strange"
+./vendors/bloat/pg_bloat_check.py -c "host=localhost dbname=<ИмяБазы> user=postgres password=strange"
+```
+
+пример принудительного сжатия bloat
+
+```
+vagrant ssh
+cd /vagrant
+perl ./vendors/compactable/bin/pgcompacttable -h localhost -p 5432 -u postgres -w strange -d <БазуВставьте> -n public
+```
