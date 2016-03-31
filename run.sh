@@ -8,7 +8,7 @@ fi
 [[ -n "$DEBUG" ]] && set -x
 
 if [ -z $ROOT ]; then
-    ROOT=/srv/data
+    ROOT=/srv/zfs
 fi
 if [ -z $PROJECT ]; then
     PROJECT="pgsteroids"

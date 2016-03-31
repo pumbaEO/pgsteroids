@@ -62,7 +62,7 @@ Vagrant.configure(2) do |config|
   # such as FTP and Heroku are also available. See the documentation at
   # https://docs.vagrantup.com/v2/push/atlas.html for more information.
   # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  #   push.app = "vanessa-dockers/pgsteroids"
   # end
 
   # Enable provisioning with a shell script. Additional provisioners such as
@@ -79,16 +79,26 @@ Vagrant.configure(2) do |config|
     pkg_cmd = "curl -sSL https://get.docker.com/ | sh; "
     # Add vagrant user to the docker group
     pkg_cmd << "usermod -a -G docker vagrant; "
+    pkg_cmd << "apt-get install zfs-fuse -y -q;"
     config.vm.provision :shell, :inline => pkg_cmd
+
+    config.vm.provider "virtualbox" do | v |
+
+      file_to_disk = './.vagrant/zfs/large_disk.vdi'
+
+      unless File.exist?(file_to_disk)
+        v.customize ['createhd', '--filename', file_to_disk, '--size', 500 * 1024]
+      end
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
+    end
+
+    pkg_cmd = "zpool create lldata -m /srv/zfs /dev/sdb; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata; "
+
+    config.vm.provision :shell, :inline => pkg_cmd
+
   end
-  pkg_cmd = "apt-get install dnsmasq python3-pip zfs-fuse python-psycopg2 libdbd-pg-perl libdbi-perl -y -q; "
+  pkg_cmd = "apt-get install dnsmasq python3-pip python-psycopg2 libdbd-pg-perl libdbi-perl -y -q; "
   config.vm.provision :shell, :inline => pkg_cmd
-
-  #pkg_cmd = "zpool create lldata -m /srv/data /dev/vdb; "
-  #pkg_cmd << "zfs set compression=gzip-9 lldata; "
-  #pkg_cmd << "zpool create lldata -m /srv/data /dev/vdb; "
-  #pkg_cmd << "zpool create lldata -m /srv/data /dev/vdb; "
-
-  #config.vm.provision :shell, :inline => pkg_cmd
 
 end

@@ -52,13 +52,13 @@ run.sh
 
 * базируется на улучшенном дистриубтиве PostgreSQLPro с уточнениями
 
-:5432 - PostgreSQLPro
-:8081 - PgStudio
-:8888 - POWA
+* порт :5432 - PostgreSQLPro
+* порт :8081 - PgStudio
+* порт :8888 - POWA
 
 ip на вашей машине
 
-* база создается средствами 1С - сервер 1С лучше на Windows (не спрашивайте почему) и версии старше 8.3.7.1760 (смотрите свойсва libpq.dll в составе 1С платформы)
+* база создается средствами 1С - сервер 1С лучше на Windows (не спрашивайте почему) и версии старше 8.3.6.1760 (смотрите свойсва libpq.dll в составе 1С платформы)
 * после создания базы обратите внимание на шаблонные postgresql.conf
 
 ```
@@ -93,3 +93,29 @@ vagrant ssh
 cd /vagrant
 perl ./vendors/compactable/bin/pgcompacttable -h localhost -p 5432 -u postgres -w strange -d <БазуВставьте> -n public
 ```
+
+### ZFS - еще больше французского сжатия
+
+в хост системе должно оказаться большее двух блочных устройства (если вы "копипастите" код)
+
+* в Virtual box создается дополнительный контролер `/dev/sdb`
+* указанное устройство монтируется как `zfs`
+* PG будет сохранять все свои данные в нем
+
+> если хотите отключить это замените в файле run.sh переменную $ROOT на `/srv/data` - посмотрите разницу
+
+### Для экспериментов используйте
+
+* Видео на Инфостарте http://infostart.ru/webinars/463095/
+* Fragister конфигурацию (убийцу фрагов) http://infostart.ru/public/173394/
+* Структуру просмотра имен таблиц 1C http://infostart.ru/public/147147/
+
+`(c) allustin, pubbaEO and some secret people`
+
+отдельная благодарность
+
+* http://infostart.ru/
+* https://github.com/postgrespro/
+* https://github.com/PostgreSQL-Consulting
+* https://github.com/2ndQuadrant
+* http://dalibo.github.io/
