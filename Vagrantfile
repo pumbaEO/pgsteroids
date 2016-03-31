@@ -78,10 +78,18 @@ Vagrant.configure(2) do |config|
     # Install Docker
     pkg_cmd = "curl -sSL https://get.docker.com/ | sh; "
     # Add vagrant user to the docker group
+    pkg_cmd << "apt-get install zfs-fuse; "
+    #pkg_cmd << "zpool create lldata -m /srv/data /dev/vdb; "
+    #pkg_cmd << "zpool create lldata -m /srv/data /dev/vdb; "
     pkg_cmd << "usermod -a -G docker vagrant; "
     config.vm.provision :shell, :inline => pkg_cmd
   end
-  pkg_cmd = "apt-get install dnsmasq python3-pip -y -q; "
+  pkg_cmd = "apt-get install dnsmasq python3-pip zfs-fuse -y -q; "
   config.vm.provision :shell, :inline => pkg_cmd
+
+  #pkg_cmd = "zpool create lldata -m /srv/data /dev/vdb; "
+  #pkg_cmd << "zfs set compression=gzip-9 lldata; "
+  #config.vm.provision :shell, :inline => pkg_cmd
+
 
 end

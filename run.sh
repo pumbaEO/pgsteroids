@@ -59,7 +59,7 @@ docker run -d  $DNSOPTIONS --restart="on-failure:1" --name powa-$USERNAME-$PROJE
         -p $INTERNAL:8888:8888 \
         --link postgres-$USERNAME-$PROJECT:db onec/powa-web
 
-docker run -d $DNSOPTIONS --name=pgstudio-$USERNAME-$PROJECT \
+docker run -d $DNSOPTIONS --restart="on-failure:1" --name=pgstudio-$USERNAME-$PROJECT \
         -p $INTERNAL:8081:8080 \
-        --link postgres-$USERNAME-$PROJECT:db \
+        --link postgres-$USERNAME-$PROJECT \
         ${REGISTRY}onec/pgstudio
