@@ -9,3 +9,4 @@ CREATE EXTENSION pg_track_settings;
 CREATE EXTENSION powa;
 \c template1
 CREATE EXTENSION hypopg;
+CREATE EXTENSION pgstattuple;
