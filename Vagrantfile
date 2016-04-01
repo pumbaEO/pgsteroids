@@ -89,24 +89,24 @@ Vagrant.configure(2) do |config|
       file_to_disk2 = './.vagrant/zfs/large_disk2.vdi'
       file_to_disk3 = './.vagrant/zfs/large_disk3.vdi'
 
-      unless File.exist?(file_to_disk)
+      unless File.exist?(file_to_disk1) # if there is a one there is a 3 (TODO)
         v.customize ['createhd', '--filename', file_to_disk1, '--size', 250 * 1024]
         v.customize ['createhd', '--filename', file_to_disk2, '--size', 250 * 1024]
         v.customize ['createhd', '--filename', file_to_disk3, '--size', 250 * 1024]
       end
-      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
-      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
-      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', file_to_disk]
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk1]
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', file_to_disk2]
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', file_to_disk3]
 
     end
 
     # copy paste - because we need to explane 3 different port devices
-    pkg_cmd = "zpool create lldata -m /srv/zfs /dev/sdb; "
-    pkg_cmd << "zfs set compression=gzip-9 lldata; "
-    pkg_cmd << "zpool create lldata -m /srv/zfs /dev/sdc; "
-    pkg_cmd << "zfs set compression=gzip-9 lldata; "
-    pkg_cmd << "zpool create lldata -m /srv/zfs /dev/sdd; "
-    pkg_cmd << "zfs set compression=gzip-9 lldata; "
+    pkg_cmd = "zpool create lldata1 -m /srv/zfs /dev/sdb; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata1; "
+    pkg_cmd << "zpool create lldata2 -m /srv/zfs /dev/sdc; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata2; "
+    pkg_cmd << "zpool create lldata3 -m /srv/zfs /dev/sdd; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata3; "
 
     config.vm.provision :shell, :inline => pkg_cmd
 
