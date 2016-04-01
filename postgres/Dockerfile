@@ -77,7 +77,6 @@ RUN apt-get update && apt-get install -y \
 ADD setup_powa-archivist.sh /docker-entrypoint-initdb.d/
 ADD install_all.sql /usr/local/src/
 
-
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 EXPOSE 5432

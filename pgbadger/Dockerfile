@@ -1,6 +1,10 @@
 FROM alpine
 
+MAINTAINER SilverBulleters, Team <team@silverbulleters.org>
+
 ENV PGBDRVER=8.0
+
+RUN mkdir -p /var/www/pg_reports
 
 RUN apk add -U unzip
 
@@ -17,3 +21,7 @@ WORKDIR /tmp/pgbadger-$PGBDRVER
 RUN perl Makefile.PL && make && make install
 
 RUN pgbadger --version
+
+WORKDIR /var/www/pg_reports
+
+ENTRYPOINT ["/usr/local/bin/pgbadger"]

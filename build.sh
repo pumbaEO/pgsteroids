@@ -24,6 +24,9 @@ pushd ./pgstudio
 docker build -t onec/pgstudio:latest .
 popd
 
+pushd ./pgbadger
+docker build -t onec/pgbadger .
+popd
 
 sleep 2
 
