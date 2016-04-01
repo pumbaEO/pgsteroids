@@ -101,11 +101,11 @@ Vagrant.configure(2) do |config|
     end
 
     # copy paste - because we need to explane 3 different port devices
-    pkg_cmd = "zpool create lldata1 -m /srv/zfs /dev/sdb; "
+    pkg_cmd = "zpool create lldata1 -m /srv/main /dev/sdb; "
     pkg_cmd << "zfs set compression=gzip-9 lldata1; "
-    pkg_cmd << "zpool create lldata2 -m /srv/zfs /dev/sdc; "
+    pkg_cmd << "zpool create lldata2 -m /srv/second /dev/sdc; "
     pkg_cmd << "zfs set compression=gzip-9 lldata2; "
-    pkg_cmd << "zpool create lldata3 -m /srv/zfs /dev/sdd; "
+    pkg_cmd << "zpool create lldata3 -m /srv/extension /dev/sdd; "
     pkg_cmd << "zfs set compression=gzip-9 lldata3; "
 
     config.vm.provision :shell, :inline => pkg_cmd

@@ -1,13 +1,16 @@
 # enabled logger
-ALTER SYSTEM SET log_duration = on
-ALTER SYSTEM SET log_min_duration_statement = 1
-ALTER SYSTEM SET log_checkpoints = on
-ALTER SYSTEM SET log_connections = on
-ALTER SYSTEM SET log_disconnections = on
-ALTER SYSTEM SET log_lock_waits = on
-ALTER SYSTEM SET log_temp_files = 0
-ALTER SYSTEM SET log_line_prefix = '%t [%p]: [%l-1] '
-ALTER SYSTEM SET lc_messages = 'C'
+\c postgres
+ALTER SYSTEM SET logging_collector = on;
+ALTER SYSTEM SET log_directory = '/var/log/postgresql/';
+ALTER SYSTEM SET log_duration = on;
+ALTER SYSTEM SET log_min_duration_statement = 1;
+ALTER SYSTEM SET log_checkpoints = on;
+ALTER SYSTEM SET log_connections = on;
+ALTER SYSTEM SET log_disconnections = on;
+ALTER SYSTEM SET log_lock_waits = on;
+ALTER SYSTEM SET log_temp_files = 0;
+ALTER SYSTEM SET log_line_prefix = '%t [%p]: [%l-1] ';
+ALTER SYSTEM SET lc_messages = 'C';
 
 CREATE EXTENSION hypopg;
 CREATE database powa;
