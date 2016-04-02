@@ -1,4 +1,7 @@
 .vagrant
+
+temp
+
 # dont use git to postgrespro patch
 alpine/02*
 alpine/50*
