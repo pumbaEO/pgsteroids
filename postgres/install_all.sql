@@ -11,6 +11,7 @@ ALTER SYSTEM SET log_lock_waits = on;
 ALTER SYSTEM SET log_temp_files = 0;
 ALTER SYSTEM SET log_line_prefix = '%t [%p]: [%l-1] ';
 ALTER SYSTEM SET lc_messages = 'C';
+ALTER SYSTEM SET logging_collector=on;
 
 CREATE EXTENSION hypopg;
 CREATE database powa;

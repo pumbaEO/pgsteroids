@@ -10,6 +10,9 @@ if [ "$1" = 'postgres' ]; then
 	mkdir -p "$PGDATA"
 	chown -R postgres "$PGDATA"
 
+	mkdir -p "$PGLOG"
+	chown -R postgres "$PGLOG"
+
 	chmod g+s /run/postgresql
 	chown -R postgres /run/postgresql
 

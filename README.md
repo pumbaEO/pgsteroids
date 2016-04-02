@@ -10,7 +10,7 @@ cd /vagrant
 ./run.sh
 ```
 
-Включайте 1С сервер и создавайте свои базы 1С. 
+Включайте 1С сервер и создавайте свои базы 1С.
 
 ```
 host=ВАШ-IP port=5432 user=postgres passw=strange
@@ -20,9 +20,9 @@ host=ВАШ-IP port=5432 user=postgres passw=strange
 
 ### vagrant
 
-Найдите где скачать `vagrant`, а для удобного запуска под windows используйте оболочку [cmder](http://cmder.net/) - проще чем настраивать ключи для доступа по ssh в vagrant. 
+Найдите где скачать `vagrant`, а для удобного запуска под windows используйте оболочку [cmder](http://cmder.net/) - проще чем настраивать ключи для доступа по ssh в vagrant.
 
-Эти команды сделают виртуальную машину 
+Эти команды сделают виртуальную машину
 
 ```
 vagrant up
@@ -85,7 +85,7 @@ run.sh
 
 ip на вашей машине - найдется "легко"
 
-* база создается средствами 1С 
+* база создается средствами 1С
 
 > сервер 1С лучше на Windows (не спрашивайте почему) и версии старше 8.3.6.1760 (смотрите свойсва libpq.dll в составе 1С платформы)
 
@@ -105,11 +105,14 @@ cp pconf/postgresql_conf.PostgreSQLPro # Удобный для быстрого 
 
 ### Скрипты
 
-* Есть несколько примеров скриптов SQL `./pscripts` - позапускайте их
+Несколько примеров скриптов SQL `./pscripts` - позапускайте их
 
-* Есть несколько скриптов
+* для просмотра сжатия колонок вашей базы
+* для поиска отсутствующих индексов
 
-**пример получения bloat**
+Управляющие скрипты администратора
+
+* **пример получения bloat**
 
 ```
 vagrant ssh
@@ -118,13 +121,30 @@ cd /vagrant
 ./vendors/bloat/pg_bloat_check.py -c "host=localhost dbname=<ИмяБазы> user=postgres password=strange"
 ```
 
-**пример принудительного сжатия bloat**
+* **пример принудительного сжатия bloat**
 
 ```
 vagrant ssh
 cd /vagrant
 perl ./vendors/compactable/bin/pgcompacttable -h localhost -p 5432 -u postgres -w strange -d <БазуВставьте> -n public
 ```
+
+* **пример построения статистики использования для анализа**
+
+```
+vagrant ssh
+cd /vagrant
+./tools/checkpoint-reports.sh
+```
+
+отчет возникнет в каталоге `./temp/wwwreports/out.html
+
+для администраторов - 2 скрипты
+
+* вход в ssh PG хоста - `./tools/enter-to-pg.sh`
+* вход в `psql` PG хоста - `./tools/enter-to-psql.sh`
+
+
 
 ### ZFS - еще больше французского сжатия
 
