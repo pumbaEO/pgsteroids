@@ -31,7 +31,7 @@ RUN mkdir /docker-entrypoint-initdb.d
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
 ENV PG_MAJOR 9.4
-ENV PG_VERSION 9.4.5-1.pgdg80+1
+ENV PG_VERSION 9.4.7-1.pgdg80+1
 
 RUN echo 'deb http://1c.postgrespro.ru/deb/ jessie main' > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - http://1c.postgrespro.ru/keys/GPG-KEY-POSTGRESPRO-1C | apt-key add -
@@ -49,7 +49,11 @@ RUN mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
 
 ENV PATH /usr/lib/postgresql/$PG_MAJOR/bin:$PATH
 ENV PGDATA /var/lib/postgresql/data
+
+ENV PGLOG /var/log/postgresql
+
 VOLUME /var/lib/postgresql/data
+VOLUME /var/log/postgresql
 
 COPY docker-entrypoint.sh /
 

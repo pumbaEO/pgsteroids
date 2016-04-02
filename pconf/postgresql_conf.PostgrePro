@@ -430,7 +430,7 @@ log_line_prefix = '%t '			# special values:
 					#        processes
 					#   %% = '%'
 					# e.g. '<%u%%%d> '
-#log_lock_waits = off			# log lock waits >= deadlock_timeout
+#log_lock_waits =	 off			# log lock waits >= deadlock_timeout
 #log_statement = 'none'			# none, ddl, mod, all
 #log_temp_files = -1			# log temporary files equal or larger
 					# than the specified size in kilobytes;
@@ -616,6 +616,6 @@ online_analyze.threshold = 50
 online_analyze.scale_factor = 0.1
 online_analyze.enable = on
 online_analyze.verbose = off
-online_analyze.min_interval = 10000 
+online_analyze.min_interval = 10000
 online_analyze.table_type = 'temporary'
 plantuner.fix_empty_table = false
