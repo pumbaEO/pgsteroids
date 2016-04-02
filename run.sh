@@ -10,7 +10,7 @@ fi
 if [ -z $ROOT ]; then
     ROOT=/srv/main
 fi
-f [ -z $LOGSROOT ]; then
+if [ -z $LOGSROOT ]; then
     LOGSROOT=/srv/extension
 fi
 
