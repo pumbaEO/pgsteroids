@@ -38,6 +38,8 @@ host=ВАШ-IP port=5432 user=postgres passw=strange
 
 и дополнительно включенные необходимые для 1С расширения.
 
+[![Открытый чат проекта https://gitter.im/VanessaDockers/pgsteroids](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/VanessaDockers/pgsteroids?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 ### vagrant
 
 Для удобного запуска под windows используйте оболочку [cmder](http://cmder.net/) - проще чем настраивать ключи для доступа по ssh в vagrant.
