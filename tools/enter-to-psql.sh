@@ -11,4 +11,4 @@ if [ -z $USERNAME ]; then
     USERNAME="vasya"
 fi
 
-docker exec -it postgres-vasya-pgsteroids su postgres -c psql
+docker exec -it postgres-$USERNAME-$PROJECT su postgres -c psql

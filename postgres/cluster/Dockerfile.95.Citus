@@ -1,0 +1,16 @@
+# vim:set ft=dockerfile:
+FROM onec/postgres:9.5
+
+MAINTAINER SilverBulleters, LLC <team@silverbulleters.org>
+
+# install Citus
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates wget \
+	&& wget -O /tmp/citus.deb -SL 'https://s3.amazonaws.com/packages.citusdata.com/debian/jessie/postgresql-9.5-citus_5.0.0-1_amd64.deb' \
+    && dpkg --install /tmp/citus.deb \
+    && rm /tmp/citus*.deb \
+    && apt-get purge -y --auto-remove ca-certificates wget \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY 000-create-symlinks-to-workers.sh 001-create-citus-extension.sql /docker-entrypoint-initdb.d/
+
+VOLUME /etc/citus
