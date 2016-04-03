@@ -17,7 +17,7 @@ docker build -t onec/powa-web .
 popd
 
 pushd ./postgres
-docker build -t onec/postgres:9.4 .
+docker build -t onec/postgres:9.5 .
 popd
 
 pushd ./pgstudio

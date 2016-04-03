@@ -30,8 +30,8 @@ RUN mkdir /docker-entrypoint-initdb.d
 
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
-ENV PG_MAJOR 9.4
-ENV PG_VERSION 9.4.7-1.pgdg80+1
+ENV PG_MAJOR 9.5
+ENV PG_VERSION 9.5.2-1.pgdg80+1
 
 RUN echo 'deb http://1c.postgrespro.ru/deb/ jessie main' > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - http://1c.postgrespro.ru/keys/GPG-KEY-POSTGRESPRO-1C | apt-key add -
@@ -42,7 +42,7 @@ RUN apt-get update \
         && apt-get install -y postgresql-common \
         && sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
         && apt-get install -y \
-                postgresql-pro-1c-9.4 \
+                postgresql-pro-1c-9.5 \
         && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql

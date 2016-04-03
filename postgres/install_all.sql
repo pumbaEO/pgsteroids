@@ -1,4 +1,4 @@
-# enabled logger
+-- enabled logger
 \c postgres
 ALTER SYSTEM SET logging_collector = on;
 ALTER SYSTEM SET log_directory = '/var/log/postgresql/';
@@ -13,7 +13,9 @@ ALTER SYSTEM SET log_line_prefix = '%t [%p]: [%l-1] ';
 ALTER SYSTEM SET lc_messages = 'C';
 ALTER SYSTEM SET logging_collector=on;
 
+-- enable hypotetics index
 CREATE EXTENSION hypopg;
+
 CREATE database powa;
 \c powa
 CREATE EXTENSION pg_stat_statements;
@@ -25,3 +27,6 @@ CREATE EXTENSION powa;
 \c template1
 CREATE EXTENSION hypopg;
 CREATE EXTENSION pgstattuple;
+-- enable prewarm for system tables
+CREATE EXTENSION pg_prewarm;
+CREATE EXTENSION pg_buffercache;
