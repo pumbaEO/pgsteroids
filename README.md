@@ -2,7 +2,15 @@
 
 Кому лень читать ниже, вот необходимые шаги для первоначальной настроки:
 
+* скачать Vagrant https://www.vagrantup.com
+* скачать VirtualBox https://www.virtualbox.org/wiki/Downloads
+* скачать git (msgit) https://git-for-windows.github.io/
+
+установить вышеуказанные программы и запустить командную строку в каталоге для эксперментов, в которой выполнить:
+
 ```
+git clone https://github.com/VanessaDockers/pgsteroids.git
+cd pgsteroids
 vagrant up
 vagrant ssh
 cd /vagrant
@@ -11,6 +19,10 @@ cd /vagrant
 ```
 
 Включайте 1С сервер и создавайте свои базы 1С.
+
+* сервер 1С лучше использовать в виде запуска из командной строки
+* запускать через командную строку `ragent <параметры сервера>` (если вы не знаете как задать параметры ragent этот репозторий не для Вас)
+
 
 ```
 host=ВАШ-IP port=5432 user=postgres passw=strange
@@ -30,8 +42,8 @@ vagrant ssh
 cd /vagrant
 ```
 
-* объем выделенной оперативной памяти 2Gb
-* 2 диска - расширяемых до 40gb и до 500gb
+* объем выделенной оперативной памяти 2Gb (можно менять в `Vagrantfile`)
+* 3 диска - расширяемых до 40gb и до 500gb
 
 значения меняйте через Virtual Box GUI в нужную Вам сторону.
 
@@ -40,7 +52,6 @@ cd /vagrant
 то есть если вы не любите `vagrant`
 
 * В виртуальную машину необходимо установить ubuntu amd 64, установить последний `docker`
-
 * пример судобашхела, в строке `usermod -a -G docker vagrant` vagrant заменить на необходимого вам пользователя.  
 
 ```
@@ -56,16 +67,13 @@ git clone https://github.com/VanessaDockers/pgsteroids.git
 cd pgsteroids
 ```
 
-Создаем папку с данными
+Создаем 3 папки с данными
 
 ```
-sudo mkdir /srv/data
-```
+sudo mkdir -p /srv/main
+sudo mkdir -p /srv/second
+sudo mkdir -p /srv/extension
 
-Дочитавшие до конца могут сразу создавать папку
-
-```
-sudo mkdir /srv/zfs
 ```
 
 ## Ну и конечно run
@@ -83,7 +91,7 @@ run.sh
 * **порт 8081** - PgStudio
 * **порт 8888** - POWA
 
-ip на вашей машине - найдется "легко"
+все службы находятся на **внешнем** IP вашего проверочного комьютера
 
 * база создается средствами 1С
 
@@ -161,6 +169,17 @@ cd /vagrant
 * Видео на Инфостарте http://infostart.ru/webinars/463095/
 * Fragister конфигурацию (убийцу фрагов) http://infostart.ru/public/173394/
 * Структуру просмотра имен таблиц 1C http://infostart.ru/public/147147/
+
+
+### Список расширений PostgreSQL
+
+* pg_prewarm
+* pg_befferscache
+* etc (TODO)
+
+### Цели, авторы, благодарности
+
+мы счмитаем что разработчик 1С должен проверять свои решения под работой не только MSSQL, но и PostgreSQL. Для быстроты запуска такого контура и создан этот репозиторий
 
 `(c) allustin, pumbaEO and some secret people`
 

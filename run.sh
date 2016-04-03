@@ -11,7 +11,10 @@ if [ -z $ROOT ]; then
     ROOT=/srv/main
 fi
 if [ -z $LOGSROOT ]; then
-    LOGSROOT=/srv/extension
+  LOGSROOT=/srv/extension
+fi
+if [ -z $PGMAJOR ]; then
+    PGMAJOR=9.5
 fi
 
 if [ -z $PROJECT ]; then
@@ -59,7 +62,7 @@ FULLPATHLOGS=$LOGSROOT/$USERNAME/$PROJECT
 docker run -d  $DNSOPTIONS --restart="on-failure:1" --name postgres-$USERNAME-$PROJECT -h db -p $INTERNAL:5432:5432 \
         -e POSTGRES_PASSWORD=strange \
         -v $FULLPATH/postgres/:/var/lib/postgresql/data \
-        -v $FULLPATHLOGS/pglog/:/var/log/postgresql onec/postgres:9.5
+        -v $FULLPATHLOGS/pglog/:/var/log/postgresql onec/postgres:$PGMAJOR
 
 docker run -d  $DNSOPTIONS --restart="on-failure:1" --name powa-$USERNAME-$PROJECT \
         -p $INTERNAL:8888:8888 \

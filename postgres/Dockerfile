@@ -30,8 +30,10 @@ RUN mkdir /docker-entrypoint-initdb.d
 
 RUN apt-key adv --keyserver ha.pool.sks-keyservers.net --recv-keys B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8
 
-ENV PG_MAJOR 9.5
-ENV PG_VERSION 9.5.2-1.pgdg80+1
+ARG PG_MAJOR
+ARG PG_VERSION
+
+RUN echo 'will be build pg $PG_MAJOR with version $PG_VERSION'
 
 RUN echo 'deb http://1c.postgrespro.ru/deb/ jessie main' > /etc/apt/sources.list.d/pgdg.list
 RUN wget --quiet -O - http://1c.postgrespro.ru/keys/GPG-KEY-POSTGRESPRO-1C | apt-key add -
@@ -42,7 +44,7 @@ RUN apt-get update \
         && apt-get install -y postgresql-common \
         && sed -ri 's/#(create_main_cluster) .*$/\1 = false/' /etc/postgresql-common/createcluster.conf \
         && apt-get install -y \
-                postgresql-pro-1c-9.5 \
+                postgresql-pro-1c-$PG_MAJOR \
         && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/run/postgresql && chown -R postgres /var/run/postgresql
@@ -64,9 +66,9 @@ RUN apt-get update && apt-get install -y \
     gcc \
     jq \
     make \
-    postgresql-contrib-9.4 \
-    postgresql-server-dev-9.4 \
-    postgresql-plpython-9.4 \
+    postgresql-contrib-$PG_MAJOR \
+    postgresql-server-dev-$PG_MAJOR \
+    postgresql-plpython-$PG_MAJOR \
     wget \
     && wget -O- $(wget -O- https://api.github.com/repos/dalibo/powa-archivist/releases/latest|jq -r '.tarball_url') | tar -xzf - \
     && wget -O- $(wget -O- https://api.github.com/repos/dalibo/pg_qualstats/releases/latest|jq -r '.tarball_url') | tar -xzf - \
@@ -74,7 +76,7 @@ RUN apt-get update && apt-get install -y \
     && wget -O- $(wget -O- https://api.github.com/repos/dalibo/hypopg/releases/latest|jq -r '.tarball_url') | tar -xzf - \
     && wget -O- $(wget -O- https://api.github.com/repos/rjuju/pg_track_settings/releases/latest|jq -r '.tarball_url') | tar -xzf - \
     && for f in $(ls); do cd $f; make install; cd ..; rm -rf $f; done \
-    && apt-get purge -y --auto-remove gcc jq make postgresql-server-dev-9.4 wget \
+    && apt-get purge -y --auto-remove gcc jq make postgresql-server-dev-$PG_MAJOR wget \
     && rm -rf /var/lib/apt/lists/*
 
 # configure powa-archivist
