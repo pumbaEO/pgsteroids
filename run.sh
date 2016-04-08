@@ -13,6 +13,9 @@ fi
 if [ -z $LOGSROOT ]; then
   LOGSROOT=/srv/extension
 fi
+if [ -z $V8SYSTEMSPACE ]; then
+  V8SYSTEMSPACE=/srv/second
+fi
 if [ -z $PGMAJOR ]; then
     PGMAJOR=9.4
 fi
@@ -61,7 +64,8 @@ FULLPATHLOGS=$LOGSROOT/$USERNAME/$PROJECT
 docker run -d  $DNSOPTIONS --restart="on-failure:1" --name postgres-$USERNAME-$PROJECT -h db -p $INTERNAL:5432:5432 \
         -e POSTGRES_PASSWORD=strange \
         -v $FULLPATH/postgres/:/var/lib/postgresql/data \
-        -v $FULLPATHLOGS/pglog/:/var/log/postgresql onec/postgres:$PGMAJOR
+        -v $FULLPATHLOGS/pglog/:/var/log/postgresql \
+        -v $V8SYSTEMSPACE/v8space onec/postgres:$PGMAJOR
 
 docker run -d  $DNSOPTIONS --restart="on-failure:1" --name powa-$USERNAME-$PROJECT \
         -p $INTERNAL:8888:8888 \

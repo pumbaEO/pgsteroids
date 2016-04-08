@@ -119,8 +119,7 @@ Vagrant.configure(2) do |config|
 
     #mkfs.ext4 -E stripe-wigth=256 (noatime, discard, defaults, nobarrier)
     #mkfs.btrfs -l 8192 compress=lzo (noatime, discard, defaults, nobarrier, ssd)
-
-
+    
   end
   pkg_cmd = "apt-get install dnsmasq python3-pip python-psycopg2 libdbd-pg-perl libdbi-perl -y -q; "
   config.vm.provision :shell, :inline => pkg_cmd
