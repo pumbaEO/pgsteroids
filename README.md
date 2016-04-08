@@ -200,7 +200,7 @@ cd /vagrant
 ### Список расширений PostgreSQL
 
 * pg_prewarm
-* pg_befferscache
+* pg_bufferscache
 * etc (TODO)
 
 ### Цели, авторы, благодарности
