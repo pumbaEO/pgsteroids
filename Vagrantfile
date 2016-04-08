@@ -13,6 +13,7 @@ Vagrant.configure(2) do |config|
    config.vm.network "forwarded_port", guest: 5432, host: 5432
    config.vm.network "forwarded_port", guest: 8081, host: 8081
    config.vm.network "forwarded_port", guest: 8888, host: 8888
+   config.vm.network "forwarded_port", guest: 9999, host: 9999
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.

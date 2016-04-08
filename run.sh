@@ -14,7 +14,7 @@ if [ -z $LOGSROOT ]; then
   LOGSROOT=/srv/extension
 fi
 if [ -z $PGMAJOR ]; then
-    PGMAJOR=9.5
+    PGMAJOR=9.4
 fi
 
 if [ -z $PROJECT ]; then
@@ -39,9 +39,8 @@ INTERNAL=$(ip addr show $INTERFACE | grep "inet\b" | awk '{print $2}' | cut -d/ 
 IPCONSUL=$INTERNAL
 
 if [ -d $ROOT/$USERNAME/$PROJECT ]; then
-    echo ""
+    echo "data directory is allready exist"
 else
-
     sudo mkdir -p $ROOT/$USERNAME/$PROJECT/postgres
 fi
 
@@ -70,5 +69,4 @@ docker run -d  $DNSOPTIONS --restart="on-failure:1" --name powa-$USERNAME-$PROJE
 
 docker run -d $DNSOPTIONS --restart="on-failure:1" --name=pgstudio-$USERNAME-$PROJECT \
         -p $INTERNAL:8081:8080 \
-        --link postgres-$USERNAME-$PROJECT \
-        ${REGISTRY}onec/pgstudio
+        --link postgres-$USERNAME-$PROJECT onec/pgstudio

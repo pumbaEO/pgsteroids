@@ -10,7 +10,7 @@ sudo service docker restart
 docker pull daald/ubuntu32:trusty
 docker pull tomcat:8-jre8
 docker pull debian:jessie
-
+docker pull bmorton/pghero
 
 pushd ./powa-web
 docker build -t onec/powa-web .
