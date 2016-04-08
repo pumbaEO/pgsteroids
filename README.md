@@ -1,6 +1,6 @@
 ## "Steroids" for Infostart Webinar Users
 
-> у каждого разработчика 1С - должен стоять локально PostgreSQL, чтобы не расслабляться 
+> у каждого разработчика 1С - должен стоять локально PostgreSQL, чтобы не расслабляться
 
 Кому лень читать ниже, вот необходимые шаги для первоначальной настроки:
 
@@ -33,7 +33,7 @@ host=ВАШ-IP port=5432 user=postgres passw=strange
 
 не забудьте заглянуть на порты `8888` и `8081` c теми же пользователем и паролем
 
-Текущий релиз `0.4` содержит
+Текущий релиз `0.5` содержит
 
 * 2 образа - 9.4.7 и 9.5.2
 * 1 образ - кластер CitusData на базе образа 9.5.2
@@ -99,9 +99,11 @@ run.sh
 
 * базируется на улучшенном дистриубтиве PostgreSQLPro с уточнениями
 
-* **порт 5432** - PostgreSQLPro1C
-* **порт 8081** - PgStudio
-* **порт 8888** - POWA
+* **порт 5432** - PostgreSQLPro1C http://1c.postgrespro.ru/
+* **порт 8081** - PgStudio http://www.postgresqlstudio.org/
+* **порт 8888** - POWA http://dalibo.github.io/powa/
+
+* **порт 9999** - PGHero (требует уже созданной 1С базы) https://github.com/ankane/pghero
 
 все службы находятся на **внешнем** IP вашего проверочного комьютера
 
@@ -123,7 +125,6 @@ cp pconf/postgresql_conf.PostgreSQLPro # Удобный для быстрого 
 
 но для первых экспериментов их лучше не смотреть, а сделать запуск тюнинга конфигурационного файла
 
-
 ### Скрипты
 
 Несколько примеров скриптов SQL `./pscripts` - позапускайте их
@@ -131,7 +132,7 @@ cp pconf/postgresql_conf.PostgreSQLPro # Удобный для быстрого 
 * для просмотра сжатия колонок вашей базы
 * для поиска отсутствующих индексов
 
-Управляющие скрипты администратора
+#### Управляющие скрипты администратора
 
 * **пример получения bloat**
 
@@ -160,11 +161,18 @@ cd /vagrant
 
 отчет возникнет в каталоге `./temp/wwwreports/out.html
 
-для администраторов - 2 скрипта
+* **запуск PGHero на вашей экспериментальной БД**
+
+```
+vagrant ssh
+cd /vagrant
+./pghero-database.sh <ИмяБазыДанных>
+```
+
+для администраторов - существуют 2 скрипта
 
 * вход в ssh PG хоста - `./tools/enter-to-pg.sh`
 * вход в `psql` PG хоста - `./tools/enter-to-psql.sh`
-
 
 ### ZFS - еще больше французского сжатия
 
@@ -187,7 +195,7 @@ cd /vagrant
 * "Тест Гилева" http://www.gilev.ru/tpc1cgilv/
 * статью "Нагрузочное тестирование 1С:Документооборот" http://infostart.ru/public/440094/
 
-и другие тестовые конфигурации
+и другие тестовые конфигурации, [в том числе со сценариями](https://github.com/silverbulleters/vanessa-behavior)
 
 ### Список расширений PostgreSQL
 
@@ -208,3 +216,5 @@ cd /vagrant
 * https://github.com/PostgreSQL-Consulting
 * https://github.com/2ndQuadrant
 * http://dalibo.github.io/
+
+> LICENSE - Mozilla Pubic License (see it at LICENSE file)
