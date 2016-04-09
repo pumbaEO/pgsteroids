@@ -13,6 +13,7 @@ Vagrant.configure(2) do |config|
    config.vm.network "forwarded_port", guest: 5432, host: 5432
    config.vm.network "forwarded_port", guest: 8081, host: 8081
    config.vm.network "forwarded_port", guest: 8888, host: 8888
+   config.vm.network "forwarded_port", guest: 9999, host: 9999
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
@@ -62,7 +63,7 @@ Vagrant.configure(2) do |config|
   # such as FTP and Heroku are also available. See the documentation at
   # https://docs.vagrantup.com/v2/push/atlas.html for more information.
   # config.push.define "atlas" do |push|
-  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  #   push.app = "vanessa-dockers/pgsteroids"
   # end
 
   # Enable provisioning with a shell script. Additional provisioners such as
@@ -79,9 +80,48 @@ Vagrant.configure(2) do |config|
     pkg_cmd = "curl -sSL https://get.docker.com/ | sh; "
     # Add vagrant user to the docker group
     pkg_cmd << "usermod -a -G docker vagrant; "
+    pkg_cmd << "apt-get install zfs-fuse -y -q;"
     config.vm.provision :shell, :inline => pkg_cmd
+
+    config.vm.provider "virtualbox" do | v |
+
+      # 0 port is for sytem disk
+      file_to_disk1 = './.vagrant/zfs/large_disk1.vdi'
+      file_to_disk2 = './.vagrant/zfs/large_disk2.vdi'
+      file_to_disk3 = './.vagrant/zfs/large_disk3.vdi'
+
+      unless File.exist?(file_to_disk1) # if there is a one there is a 3 (TODO)
+        v.customize ['createhd', '--filename', file_to_disk1, '--size', 250 * 1024]
+        v.customize ['createhd', '--filename', file_to_disk2, '--size', 250 * 1024]
+        v.customize ['createhd', '--filename', file_to_disk3, '--size', 250 * 1024]
+      end
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', file_to_disk1]
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', file_to_disk2]
+      v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', file_to_disk3]
+
+    end
+
+    # copy paste - because we need to explane 3 different port devices
+    pkg_cmd = "zpool create lldata1 -m /srv/main /dev/sdb; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata1; "
+    pkg_cmd << "zfs set recordsize=8k lldata1; "
+    pkg_cmd << "zfs set atime=off lldata1; "
+    pkg_cmd << "zpool create lldata2 -m /srv/second /dev/sdc; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata2; "
+    pkg_cmd << "zfs set recordsize=8k lldata2; "
+    pkg_cmd << "zfs set atime=off lldata2; "
+    pkg_cmd << "zpool create lldata3 -m /srv/extension /dev/sdd; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata3; "
+    pkg_cmd << "zfs set recordsize=8k lldata3; "
+    pkg_cmd << "zfs set atime=off lldata3; "
+
+    config.vm.provision :shell, :inline => pkg_cmd
+
+    #mkfs.ext4 -E stripe-wigth=256 (noatime, discard, defaults, nobarrier)
+    #mkfs.btrfs -l 8192 compress=lzo (noatime, discard, defaults, nobarrier, ssd)
+    
   end
-  pkg_cmd = "apt-get install dnsmasq python3-pip -y -q; "
+  pkg_cmd = "apt-get install dnsmasq python3-pip python-psycopg2 libdbd-pg-perl libdbi-perl -y -q; "
   config.vm.provision :shell, :inline => pkg_cmd
 
 end

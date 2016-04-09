@@ -9,3 +9,6 @@ gosu postgres pg_ctl -D "$PGDATA" -w stop -m fast
 gosu postgres pg_ctl -D "$PGDATA" -w start
 
 gosu postgres psql -f /usr/local/src/install_all.sql
+
+# read the auto conf params
+gosu postgres pg_ctl -D "$PGDATA" reload

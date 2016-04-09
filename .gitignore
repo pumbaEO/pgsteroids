@@ -1,1 +1,18 @@
+.env
+
 .vagrant
+
+temp
+
+# dont use git to postgrespro patch
+alpine/02*
+alpine/50*
+alpine/51*
+alpine/52*
+alpine/53*
+alpine/65*
+alpine/66*
+alpine/67*
+alpine/68*
+alpine/69*
+alpine/70*
