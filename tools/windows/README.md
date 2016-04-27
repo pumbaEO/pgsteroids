@@ -8,6 +8,8 @@
 
 не будем комментировать, просто дадим ссылки на дистрибутивы
 
+* 9.5.2 - прямая ссылка http://1c.postgrespro.ru/win/64/PostgresPro%201C_9.4.7_X64bit_1C_Setup.exe
+
 * 9.4.7 и выше http://www.postgrespro.ru/products/1c_build
 * 9.4.2 и ниже https://releases.1c.ru/project/AddCompPostgre (требует акаунта на users.v8.1.ru)
 
