@@ -115,7 +115,7 @@ Vagrant.configure(2) do |config|
     pkg_cmd << "zfs set compression=gzip-9 lldata3; "
     
     #temptablespace (rigth now with )
-    pkg_cmd << "zpool create lldata4 -m /srv/extension /dev/sde; "
+    pkg_cmd << "zpool create lldata4 -m /srv/four /dev/sde; "
     pkg_cmd << "zfs set compression=gzip-9 lldata4; "
 
     
