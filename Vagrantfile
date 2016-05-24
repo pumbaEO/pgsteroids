@@ -102,7 +102,7 @@ Vagrant.configure(2) do |config|
       #apply temp_tablespace to separate dev
       file_to_disk4 = './.vagrant/zfs/large_disk4.vdi'
       unless File.exist?(file_to_disk4)
-        v.customize ['createhd', '--filename', file_to_disk3, '--size', 250 * 1024]
+        v.customize ['createhd', '--filename', file_to_disk4, '--size', 250 * 1024]
       end
     end
 
@@ -113,7 +113,12 @@ Vagrant.configure(2) do |config|
     pkg_cmd << "zfs set compression=gzip-9 lldata2; "
     pkg_cmd << "zpool create lldata3 -m /srv/extension /dev/sdd; "
     pkg_cmd << "zfs set compression=gzip-9 lldata3; "
+    
+    #temptablespace (rigth now with )
+    pkg_cmd << "zpool create lldata4 -m /srv/extension /dev/sde; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata4; "
 
+    
     config.vm.provision :shell, :inline => pkg_cmd
 
   end
