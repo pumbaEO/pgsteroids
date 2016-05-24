@@ -13,6 +13,9 @@ ALTER SYSTEM SET log_line_prefix = '%t [%p]: [%l-1] ';
 ALTER SYSTEM SET lc_messages = 'C';
 ALTER SYSTEM SET logging_collector=on;
 
+--enable 
+ALTER SYSTEM SET temp_tablespaces = 'additional_temp_tblspc'
+
 -- enable hypotetics index
 CREATE EXTENSION hypopg;
 
