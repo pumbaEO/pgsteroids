@@ -15,6 +15,7 @@ ALTER SYSTEM SET logging_collector=on;
 
 --enable 
 ALTER SYSTEM SET temp_tablespaces = 'additional_temp_tblspc'
+create TABLESPACE additional_temp_tblspc LOCATION '/src/four/pg_tmp_tblspace';
 
 -- enable hypotetics index
 CREATE EXTENSION hypopg;
