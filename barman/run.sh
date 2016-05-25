@@ -70,18 +70,29 @@ fi
 
 if [ ! -s "$FULLPATH/barman/.ssh/id_rsa.pub" ]; then
     sudo mkdir -p $FULLPATH/barman/.ssh
-    sudo ssh-keygen -t rsa -N '' -q -f $FULLPATH/barman/.ssh/id_rsa
+    sudo ssh-keygen -t rsa -N '' -q -f $FULLPATH/barman/.ssh/id_rsa -g -n "barman@backup"
+    
 fi
 
 if [ ! -s "$FULLPATH/postgresssh/.ssh/id_rsa.pub" ]; then
     sudo mkdir -p $FULLPATH/postgresssh/.ssh
-    sudo ssh-keygen -t rsa -N '' -q -f $FULLPATH/postgresssh/.ssh/id_rsa
+    sudo ssh-keygen -t rsa -N '' -q -f $FULLPATH/postgresssh/.ssh/id_rsa -g -n "postgres@pg"
     
     sudo chown vagrant:vagrant -R $FULLPATH/barman/.ssh/
     sudo chown vagrant:vagrant -R $FULLPATH/postgresssh/.ssh/
     
-    cat $FULLPATH/postgresssh/.ssh/id_rsa.pub >> $FULLPATH/barman/.ssh/authorized_keys
-    cat $FULLPATH/barman/.ssh/id_rsa.pub >> $FULLPATH/postgresssh/.ssh/authorized_keys
+    cat >> $FULLPATH/barman/.ssh/ssh_config << EOL
+Host pg
+   StrictHostKeyChecking no
+EOL
+
+    cat >> $FULLPATH/postgresssh/.ssh/ssh_config << EOL
+Host backup
+   StrictHostKeyChecking no
+EOL
+    
+    cat $FULLPATH/postgresssh/.ssh/id_rsa.pub > $FULLPATH/barman/.ssh/authorized_keys
+    cat $FULLPATH/barman/.ssh/id_rsa.pub > $FULLPATH/postgresssh/.ssh/authorized_keys
 
 fi
 
@@ -120,3 +131,6 @@ docker run -d $DNSOPTIONS --net=pgsteroids --restart="on-failure:1" --name=barma
         --link postgres-$USERNAME-$PROJECT:pg \
         -v $FULLPATH/barman:/var/lib/barman \
         onec/barman
+
+
+docker exec -u barman barman-$USERNAME-$PROJECT barman check main
