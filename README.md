@@ -1,4 +1,4 @@
-## "Steroids" for Infostart Webinar Users
+## PostgreSQL "Steroids" for Vanessa Users
 
 > у каждого разработчика 1С - должен стоять локально PostgreSQL, чтобы не расслабляться
 
@@ -33,21 +33,22 @@ host=ВАШ-IP port=5432 user=postgres passw=strange
 
 не забудьте заглянуть на порты `8888` и `8081` c теми же пользователем и паролем
 
-Текущий релиз `0.5` содержит
+Текущий релиз `0.6` содержит
 
 * 2 образа - 9.4.7 и 9.5.2
 * 1 образ - кластер CitusData на базе образа 9.5.2
+* контейнеры:
+ * pgHero - базовый онлайн контроль
+ * POWA - расширенный онлайн контроль
+ * pgBadger - аналитический контроль
+ * pgStudio - онлайн выполнение запросов
+ * barman - специализированное бэкапирование
 
 и дополнительно включенные необходимые для 1С расширения.
 
 [![Открытый чат проекта https://gitter.im/VanessaDockers/pgsteroids](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/VanessaDockers/pgsteroids?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-дополнительно имеем подготовленные образа сборки, для быстроты запуска
-
-* https://hub.docker.com/r/silverbulleters/vanessa-postgresql-94/
-* https://hub.docker.com/r/silverbulleters/vanessa-postgresql-95/
-
-### vagrant
+### Vagrant
 
 Для удобного запуска под windows используйте оболочку [cmder](http://cmder.net/) - проще чем настраивать ключи для доступа по ssh в vagrant.
 
@@ -64,6 +65,11 @@ cd /vagrant
 
 значения меняйте через Virtual Box GUI в нужную Вам сторону.
 
+дополнительно имеем подготовленные образа сборки, для быстроты запуска
+   
+* https://hub.docker.com/r/silverbulleters/vanessa-postgresql-94/
+* https://hub.docker.com/r/silverbulleters/vanessa-postgresql-95/
+   
 ### VMWare, hyperv, virtualbox
 
 то есть если вы не любите `vagrant`
@@ -205,8 +211,13 @@ cd /vagrant
 ### Список расширений PostgreSQL
 
 * pg_prewarm
-* pg_befferscache
+* pg_bufferscache
 * etc (TODO)
+
+## Известные проблемы
+
+* Windows 10 x64 в режиме чистой установки не содержит некоторых DLL для работы Vagrant - если вы получаете ошибку `could not be found or
+could not be accessed in the remote catalog` тогда установите дополнительный пакет [как это описано тут](https://github.com/mitchellh/vagrant/issues/6764#issuecomment-210226230)
 
 ### Цели, авторы, благодарности
 

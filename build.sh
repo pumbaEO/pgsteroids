@@ -37,8 +37,16 @@ pushd ./barman
 docker build -t onec/barman .
 popd
 
+pushd ./barman/postgres
+echo "build barman postgres"
+docker build -t onec/postgres:9.4-barman -f Dockerfile.94 .
+docker build -t onec/postgres:9.5-barman -f Dockerfile.95 .
+popd
+
 
 sleep 2
 
 docker rmi $(docker images | grep "^<none>" | awk '{print $3}')
+
+#docker network create -d bridge pgsteroids
 #docker-compose -f docker-compose-94.yml build

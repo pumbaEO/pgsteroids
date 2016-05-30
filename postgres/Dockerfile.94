@@ -54,8 +54,11 @@ ENV PGDATA /var/lib/postgresql/data
 
 ENV PGLOG /var/log/postgresql
 
+ENV PGEXTDATA /data/v8systemspace
+
 VOLUME /var/lib/postgresql/data
 VOLUME /var/log/postgresql
+VOLUME /data/v8systemspace
 
 COPY docker-entrypoint.sh /
 

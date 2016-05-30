@@ -13,7 +13,7 @@ ALTER SYSTEM SET log_line_prefix = '%t [%p]: [%l-1] ';
 ALTER SYSTEM SET lc_messages = 'C';
 ALTER SYSTEM SET logging_collector=on;
 
---enable 
+--enable tablespace for system tables of onec-enterprise
 ALTER SYSTEM SET temp_tablespaces = 'additional_temp_tblspc'
 create TABLESPACE additional_temp_tblspc LOCATION '/src/four/pg_tmp_tblspace';
 

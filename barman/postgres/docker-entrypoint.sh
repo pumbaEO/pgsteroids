@@ -1,9 +1,16 @@
 #!/bin/bash
-set -e
+set -x
 
 set_listen_addresses() {
 	sedEscapedValue="$(echo "$1" | sed 's/[\/&]/\\&/g')"
 	sed -ri "s/^#?(listen_addresses\s*=\s*)\S+/\1'$sedEscapedValue'/" "$PGDATA/postgresql.conf"
+}
+
+function start_sshd {
+    #mkdir -p /home/postgres/
+    #gosu postgres cp -R "$PGDATA/.ssh/" /home/postgres/.ssh
+    chown -R postgres:postgres /home/postgres/.ssh
+    /usr/sbin/sshd
 }
 
 if [ "$1" = 'postgres' ]; then
@@ -94,8 +101,10 @@ if [ "$1" = 'postgres' ]; then
 		echo
 		echo 'PostgreSQL init process complete; ready for start up.'
 		echo
+        
 	fi
-
+    
+    start_sshd   
 	exec gosu postgres "$@"
 fi
 
