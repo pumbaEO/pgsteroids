@@ -78,6 +78,7 @@ Vagrant.configure(2) do |config|
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
     # Install Docker
     pkg_cmd = "curl -sSL https://get.docker.com/ | sh; "
+    # Add vagrant user to the docker group
     pkg_cmd << "usermod -a -G docker vagrant; "
     pkg_cmd << "apt-get install zfs-fuse -y -q;"
     config.vm.provision :shell, :inline => pkg_cmd
@@ -98,6 +99,11 @@ Vagrant.configure(2) do |config|
       v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', file_to_disk2]
       v.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 3, '--device', 0, '--type', 'hdd', '--medium', file_to_disk3]
 
+      #apply temp_tablespace to separate dev
+      file_to_disk4 = './.vagrant/zfs/large_disk4.vdi'
+      unless File.exist?(file_to_disk4)
+        v.customize ['createhd', '--filename', file_to_disk4, '--size', 250 * 1024]
+      end
     end
 
     # copy paste - because we need to explane 3 different port devices
@@ -113,7 +119,12 @@ Vagrant.configure(2) do |config|
     pkg_cmd << "zfs set compression=gzip-9 lldata3; "
     pkg_cmd << "zfs set recordsize=8k lldata3; "
     pkg_cmd << "zfs set atime=off lldata3; "
+    
+    #temptablespace (rigth now with )
+    pkg_cmd << "zpool create lldata4 -m /srv/four /dev/sde; "
+    pkg_cmd << "zfs set compression=gzip-9 lldata4; "
 
+    
     config.vm.provision :shell, :inline => pkg_cmd
 
     #mkfs.ext4 -E stripe-wigth=256 (noatime, discard, defaults, nobarrier)

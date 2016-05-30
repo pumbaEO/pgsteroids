@@ -1,4 +1,4 @@
-## "Steroids" for Infostart Webinar Users
+## PostgreSQL "Steroids" for Vanessa Users
 
 > у каждого разработчика 1С - должен стоять локально PostgreSQL, чтобы не расслабляться
 
