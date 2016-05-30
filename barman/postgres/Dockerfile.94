@@ -1,0 +1,28 @@
+# vim:set ft=dockerfile:
+FROM onec/postgres:9.4
+
+COPY docker-entrypoint.sh /
+
+# добавил установку powa мониторига от dabo https://github.com/dalibo/docker
+WORKDIR /usr/local/src
+
+RUN apt-get update && apt-get install -y openssh-server rsync\
+    && apt-get purge -y --auto-remove gcc jq make wget \
+    && rm -rf /var/lib/apt/lists/*
+
+
+RUN set -x \
+	&& mkdir -p /var/run/sshd \
+	&& chmod 700 /var/run/sshd \
+	&& sed -i 's/^#PasswordAuthentication yes/PasswordAuthentication no/' /etc/ssh/sshd_config \
+    && sed -i 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config \
+    && sed -i 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
+# From http://stackoverflow.com/questions/18173889/cannot-access-centos-sshd-on-docker
+
+ADD setup_barmanconfig.sh /docker-entrypoint-initdb.d/
+
+VOLUME /home/postgres/.ssh
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+EXPOSE 5432
+CMD ["postgres"]
