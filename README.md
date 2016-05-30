@@ -59,6 +59,11 @@ cd /vagrant
 
 значения меняйте через Virtual Box GUI в нужную Вам сторону.
 
+дополнительно имеем подготовленные образа сборки, для быстроты запуска
+   
+* https://hub.docker.com/r/silverbulleters/vanessa-postgresql-94/
+* https://hub.docker.com/r/silverbulleters/vanessa-postgresql-95/
+   
 ### VMWare, hyperv, virtualbox
 
 то есть если вы не любите `vagrant`
