@@ -42,7 +42,7 @@ host=ВАШ-IP port=5432 user=postgres passw=strange
 
 [![Открытый чат проекта https://gitter.im/VanessaDockers/pgsteroids](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/VanessaDockers/pgsteroids?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-### vagrant
+### Vagrant
 
 Для удобного запуска под windows используйте оболочку [cmder](http://cmder.net/) - проще чем настраивать ключи для доступа по ssh в vagrant.
 
@@ -202,6 +202,11 @@ cd /vagrant
 * pg_prewarm
 * pg_bufferscache
 * etc (TODO)
+
+## Известные проблемы
+
+* Windows 10 x64 в режиме чистой установки не содержит некоторых DLL для работы Vagrant - если вы получаете ошибку `could not be found or
+could not be accessed in the remote catalog` тогда установите дополнительный пакет [как это описано тут](https://github.com/mitchellh/vagrant/issues/6764#issuecomment-210226230)
 
 ### Цели, авторы, благодарности
 

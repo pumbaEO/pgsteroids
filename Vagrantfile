@@ -78,7 +78,6 @@ Vagrant.configure(2) do |config|
   if Dir.glob("#{File.dirname(__FILE__)}/.vagrant/machines/default/*/id").empty?
     # Install Docker
     pkg_cmd = "curl -sSL https://get.docker.com/ | sh; "
-    # Add vagrant user to the docker group
     pkg_cmd << "usermod -a -G docker vagrant; "
     pkg_cmd << "apt-get install zfs-fuse -y -q;"
     config.vm.provision :shell, :inline => pkg_cmd
