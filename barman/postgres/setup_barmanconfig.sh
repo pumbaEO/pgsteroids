@@ -5,7 +5,7 @@ set -e
 gosu postgres cat >> $PGDATA/postgresql.conf << EOL
 wal_level = 'archive' # For PostgreSQL >= 9.0
 archive_mode = on
-archive_command = 'rsync -a -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" %p barman@backup:INCOMING_WALS_DIRECTORY/%f'
+archive_command = 'rsync -a -e "ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null" %p barman@backup:/var/lib/barman/main/incoming/%f'
 EOL
  
 gosu postgres pg_ctl -D "$PGDATA" -w stop -m fast

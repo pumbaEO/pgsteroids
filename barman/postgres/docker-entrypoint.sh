@@ -104,6 +104,10 @@ if [ "$1" = 'postgres' ]; then
         
 	fi
     
+    if [ "$POSTGRES_PASSWORD" ]; then
+	    echo 'postgres:$POSTGRES_PASSWORD' | chpasswd
+    fi
+
     start_sshd   
 	exec gosu postgres "$@"
 fi

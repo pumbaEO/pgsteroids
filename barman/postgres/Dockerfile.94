@@ -19,6 +19,11 @@ RUN set -x \
     && sed -i 's/#UsePAM no/UsePAM no/g' /etc/ssh/sshd_config
 # From http://stackoverflow.com/questions/18173889/cannot-access-centos-sshd-on-docker
 
+RUN sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# SSH login fix. Otherwise user is kicked off after login
+RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
 ADD setup_barmanconfig.sh /docker-entrypoint-initdb.d/
 
 VOLUME /home/postgres/.ssh
